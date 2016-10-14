@@ -1,5 +1,5 @@
-compile: LinkedList.c LinkedList.h
-	gcc LinkedList.c LinkedList.h -o LinkedList
+LinkedList: LinkedList.c
+	gcc LinkedList.c -o LinkedList
 
-run: compile
+run: LinkedList
 	./LinkedList
