@@ -17,7 +17,10 @@ void printlistH(struct node* start)
 		printf("]");
 		return;
 	}
-	printf("%s by %s, ", start->name, start->artist);
+	printf("%s by %s", start->name, start->artist);
+  if(start->next) printf(",");
+  printf(" ");
+
 	printlistH(start->next);
 }
 
@@ -28,11 +31,17 @@ void printlist(struct node* start)
 	printf("\n");
 }
 
+void printNode(struct node* k)
+{
+  printf("====#%s by %s\n", k->name, k->artist);
+}
+
 struct node* findSong(char* song, struct node* now){
   struct node* k = now;
   while(k){
-    if(strcmp(now->name, song) == 0){
-      return now;
+    //printNode(k);
+    if(strcmp(k->name, song) == 0){
+      return k;
     }
     k = k->next;
   }
@@ -43,15 +52,15 @@ struct node* findArtistSong(char* art, struct node* now){
   struct node* k = now;
   while(k){
     if(strcmp(k->artist, art) == 0){
-      return now;
+      return k;
     }
     k = k->next;
   }
   return NULL;
 }
 
-struct node* findRandom(struct node* now){
-  int r = rand() % 1000;
+struct node* findRandom(struct node* now, int listLen){
+  int r = rand() % listLen;
   struct node* k = now;
   while(r){
     if(k == NULL){
@@ -67,15 +76,19 @@ struct node* findRandom(struct node* now){
   return k;
 }
 
-struct node* insertFront(struct node* startI, char *a, char *n)
+struct node* insertFront(struct node* startI, char *n, char *a)
 {
 	struct node *newStart = (struct node*) malloc(sizeof(struct node));
+  strcpy(newStart->name, n);
 	strcpy(newStart->artist, a);
-	strcpy(newStart->name, n);
+  newStart->next = startI;
 	return newStart;
 }
 
-void insetOrder(struct node* start, char *a, char *n){
+/////////////////insert order/////////////////
+/*
+old version
+void insertOrderOldVersion(struct node* start, char *a, char *n){
   int i;
   for(i = 0; i < strlen(n); i++){
     if(*(n+i) > 64 && *(n+i) < 91){
@@ -89,7 +102,8 @@ void insetOrder(struct node* start, char *a, char *n){
   }
 }
 
-void insertOrderH(struct node* last, struct node* new, struct node* k){
+
+void insertOrderHOldVersion(struct node* last, struct node* new, struct node* k){
   if(strcmp(new->name, k->name) > 0){
     return;
   }
@@ -100,6 +114,34 @@ void insertOrderH(struct node* last, struct node* new, struct node* k){
   k->next = new;
   insertOrderH(k, new, j);
 }
+*/
+
+//returns node at head of linked list
+struct node* insertOrderH(struct node* start, char *n, char* a)
+{
+    if(start == NULL || strcmp(n, start->name) < 0) //base case: n comes alphabetically before the song at start
+    {
+        start = insertFront(start, n, a);
+        return start;
+    }
+    start->next = insertOrderH(start->next, n, a); //n has to go after the song at start
+    return start;
+}
+
+struct node* insertOrder(struct node* start, char *n, char* a)
+{
+    int i;
+    for(i = 0; i < strlen(n); i++){
+      if(*(n+i) > 64 && *(n+i) < 91){
+        n+=32;
+     }
+    }
+
+    start = insertOrderH(start, n, a);
+    return start;
+}
+
+//////////////////////////////////////////////
 
 struct node* freeList(struct node* start)
 {
@@ -116,9 +158,11 @@ struct node* freeList(struct node* start)
 struct node* removeNode(struct node* start, struct node* remove){
   struct node* now = start;
   if(start == remove){
+    struct node* ans = start->next;
     free(start);
-    return NULL;
+    return ans;
   }
+  struct node* originalStart = start;
   while(start->next){
     if(start->next == remove){
       start->next = remove->next;
@@ -126,33 +170,98 @@ struct node* removeNode(struct node* start, struct node* remove){
     }
     start = start->next;
   }
+  return originalStart;
 }
 
 int main () {
 
-  /*struct node *start = (struct node*) malloc(sizeof(struct node));
-	start->i = 10;
-	start->next = NULL;
+    printf("================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================\n");
+    printf("============================Insert Order Test============================\n");
 
-	printf("===========================printlist and insertFront test===========================\n");
-	printlist(start);
+    struct node* start = insertFront(NULL, "song", "Arvind M");
+    start = insertOrder(start, "song2", "Arvind M2");
+    start = insertOrder(start, "sang", "WOSTLUND3");
+    start = insertOrder(start, "wijrijrw", "ieijirje");
+    start = insertOrder(start, "abcde", "jrngjenrg"); //specialcase
+    printf("after inserting the songs \"song\", \"song2\", \"sang\", \"wijrijrw\", and \"abcde\":\n");
+    printlist(start);
+    printf("\n\n");
 
-	start = insertFront(start, 20);
-	printf("inserted 20:\n");
-	printlist(start);
-	//printlist(start->next);
-	printf("\n");
+    printf("============================Find Song Test============================\n");
+    //this test will search for a song and print the entire linked list starting at that song
+    printf("original list: ");
+    printlist(start);
+    printf("\n");
 
-	start = insertFront(start, 30);
-	printf("inserted 30:\n");
-	printlist(start);
-	//printlist(start->next);
-	//printlist(start->next->next);
-	//printlist(start->next->next->next);
-	printf("\n");
+    char* songs[7] = {"song", "song2", "sang", "wijrijrw", "abcde", "out1", "out2"};
+    int c = 0;
+    for(; c < 7; c++)
+    {
+      printf("searching for %s: \n", songs[c]);
+      printlist(findSong(songs[c], start));
+      printf("\n");
+    }
+    printf("\n\n");
 
-	printf("===========================freeList test===========================\n");
-	start = freeList(start);
-	printf("start freed:\n");
-	printlist(start);*/
+    printf("============================Find Artist Song Test============================\n");
+    //this test will search for a song and print the entire linked list starting at that song
+    printf("inserting more songs:\n");
+    start = insertOrder(start, "song3", "Arvind M");
+    start = insertOrder(start, "ff", "Arvind M");
+    start = insertOrder(start, "ee", "Arvind M");
+    start = insertOrder(start, "dd", "WOSTLUND3");
+    start = insertOrder(start, "cc", "WOSTLUND3");
+    printf("new List: ");
+    printlist(start);
+    printf("\n");
+
+    printf("first song of Arvind M2: \n");
+    printlist(findArtistSong("Arvind M2", start));
+    printf("first song of Arvind M: \n");
+    printlist(findArtistSong("Arvind M", start));
+    printf("first song of WOSTLUND3: \n");
+    printlist(findArtistSong("WOSTLUND3", start));
+    printf("first song of WOSTLUND: \n");
+    printlist(findArtistSong("WOSTLUND", start));
+    printf("\n\n");
+
+    printf("============================Random Song Test============================\n");
+    printf("list: ");
+    printlist(start);
+
+    c = 0;
+    for(; c < 10; c++)
+    {
+      printf("random song: ");
+      printNode(findRandom(start, 10));
+      printf("state of list: ");
+      printlist(start);
+      printf("\n");
+    }
+
+    printf("============================Remove Node Test============================\n");
+    struct node* removing = start->next->next->next;
+    printf("removing the node: ");
+    printNode(removing);
+    start = removeNode(start, removing);
+    printlist(start);
+
+    removing = start;
+    printf("removing the node: ");
+    printNode(removing);
+    start = removeNode(start, removing);
+    printlist(start);
+
+    removing = start;
+    printf("removing the node: ");
+    printNode(removing);
+    start = removeNode(start, removing);
+    printlist(start);
+
+    removing = start->next->next;
+    printf("removing the node: ");
+    printNode(removing);
+    start = removeNode(start, removing);
+    printlist(start);
+
 }
