@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "LinkedList.h"
+#include <time.h>
 
 struct node* songs[26];
 
@@ -44,6 +45,7 @@ void printLetter(char letter)
 
 void printAllSongs(char* artName)
 {
+	printf("printing all songs of %s:\n", artName);
 	int i = 0;
 	for(; i < 26; i++)
 	{
@@ -69,6 +71,8 @@ void printLibrary()
 
 void shuffle(int count)
 {
+	printf("%d random songs\n", count);
+	srand(time(NULL));
 	for(; count; count--)
 	{
 		int randomLetter = rand() % 26;
@@ -89,16 +93,22 @@ struct node* findNode(char *n, struct node* start)
 
 struct node* deleteSong(char* n, char* a)
 {
+	printf("==deleting %s by %s==\n", n, a);
 	char firstChar = *n;
 	struct node* removing = findNode(n, songs[firstChar - 97]);
 	songs[firstChar - 97] = removeNode(songs[firstChar - 97], removing);
+	printLibrary();
 	return songs[firstChar - 97];
 }
 
 void clearLibrary()
 {
 	int i = 0;
-	for(; i < 26; i++) songs[i] = freeList(songs[i]);
+	for(; i < 26; i++)
+	{
+		printf("freeing %c\n", i + 97);
+		songs[i] = freeList(songs[i]);
+	}
 }
 
 int main () {
@@ -135,14 +145,36 @@ int main () {
 	printNode(searchArtist("fijifj"));
 
 	printf("================================Test printLetter================================\n");
+	int i = 0;
+	for(; i < 26; i++) 
+	{
+		printf("%c: ", i + 97);
+		printLetter(i + 97);
+	}
 
 	printf("================================Test printAllSongs================================\n");
+	printAllSongs("am3");
+	printAllSongs("am2030");
+
 
 	printf("================================Test shuffle================================\n");
-
-	printf("================================Test findNode================================\n");
+	shuffle(5);
+	shuffle(5);
+	shuffle(8);
 
 	printf("================================Test deleteSong================================\n");
+
+	deleteSong("jAm", "am2030");
+	deleteSong("jSong1", "am2030");
+	deleteSong("jSong2", "am2030");
+	deleteSong("tSong", "am2030");
+	deleteSong("song1", "am2030");
+	deleteSong("rijirjg", "fijifj");
+
+
+	printf("================================Test clearLibrary================================\n");
+	clearLibrary();
+
 
 	return 0;
 }

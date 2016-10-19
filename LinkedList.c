@@ -153,25 +153,24 @@ struct node* insertOrder(struct node* start, char *n, char* a)
 
 struct node* freeList(struct node* start)
 {
-	if(start->next == NULL)
-	{
-		free(start);
-		return NULL;
-	}
-	freeList(start->next);
-	free(start);
-	return NULL;
+  if(start == NULL) return NULL;
+  freeList(start->next);
+  free(start);
+  return NULL;
 }
 
 struct node* removeNode(struct node* start, struct node* remove){
+  if(start == NULL) return NULL;
+
   struct node* now = start;
   if(start == remove){
     struct node* ans = start->next;
     free(start);
     return ans;
   }
+
   struct node* originalStart = start;
-  while(start->next){
+  while(start && start->next){
     if(start->next == remove){
       start->next = remove->next;
       free(remove);
