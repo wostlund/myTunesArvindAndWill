@@ -84,6 +84,8 @@ void shuffle(int count)
 	}
 }
 
+//move this function to LinkedList.c?
+//finds the node in a linkedlist which has the name n
 struct node* findNode(char *n, struct node* start)
 {
 	if(start == NULL) return start;
