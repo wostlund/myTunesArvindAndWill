@@ -33,6 +33,11 @@ void printlist(struct node* start)
 
 void printNode(struct node* k)
 {
+  if(k == NULL)
+  {
+    printf("NULL\n");
+    return;
+  }
   printf("====#%s by %s\n", k->name, k->artist);
 }
 

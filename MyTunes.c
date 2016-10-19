@@ -12,7 +12,7 @@ void initSongs()
 
 struct node* addSong(char* n, char* a)
 {
-	printf("adding the song %s by %s\n", n, a);
+	printf("adding %s by %s\n", n, a);
 	char firstChar = *n;
 	songs[firstChar - 97] = insertOrder(songs[firstChar - 97], n, a);
 	return songs[firstChar - 97];
@@ -20,12 +20,14 @@ struct node* addSong(char* n, char* a)
 
 struct node* searchSong(char* n, char* a)
 {
+	printf("searching for %s by %s\n", n, a);
 	char firstChar = *n;
 	return findSong(n, songs[firstChar - 97]);
 }
 
 struct node* searchArtist(char* artName)
 {
+	printf("searching for the first song of %s\n", artName);
 	int i = 0;
 	for(; i < 26; i++)
 	{
@@ -107,10 +109,40 @@ int main () {
 	printf("================================Test add song================================\n");
 
 	addSong("song1", "am3");
-	printLibrary();
+	//printLibrary();
 
 	addSong("tSong", "am2030");
+	//printLibrary();
+
+	addSong("jAm", "am2030");
+	addSong("jSong1", "am2030");
+	addSong("jSong2", "am2030");
 	printLibrary();
+
+	printf("================================Test searchSong================================\n");
+
+	printlist(searchSong("jAm", "am2030"));
+	printlist(searchSong("jSong1", "am2030"));
+	printlist(searchSong("jSong2", "am2030"));
+	printlist(searchSong("tSong", "am2030"));
+	printlist(searchSong("song1", "am2030"));
+	printlist(searchSong("rijirjg", "fijifj"));
+
+
+	printf("================================Test searchArtist================================\n");
+	printNode(searchArtist("am2030"));
+	printNode(searchArtist("am3"));
+	printNode(searchArtist("fijifj"));
+
+	printf("================================Test printLetter================================\n");
+
+	printf("================================Test printAllSongs================================\n");
+
+	printf("================================Test shuffle================================\n");
+
+	printf("================================Test findNode================================\n");
+
+	printf("================================Test deleteSong================================\n");
 
 	return 0;
 }
