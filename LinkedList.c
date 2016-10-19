@@ -78,7 +78,7 @@ struct node* findRandom(struct node* now, int listLen){
 
 struct node* insertFront(struct node* startI, char *n, char *a)
 {
-	struct node *newStart = (struct node*) malloc(sizeof(struct node));
+	struct node *newStart = (struct node*) calloc(1, sizeof(struct node));
   strcpy(newStart->name, n);
 	strcpy(newStart->artist, a);
   newStart->next = startI;
@@ -130,13 +130,16 @@ struct node* insertOrderH(struct node* start, char *n, char* a)
 
 struct node* insertOrder(struct node* start, char *n, char* a)
 {
+    /*
     int i;
     for(i = 0; i < strlen(n); i++){
       if(*(n+i) > 64 && *(n+i) < 91){
         n+=32;
      }
     }
+    */
 
+    //printf("%s by %s\n", n, a);
     start = insertOrderH(start, n, a);
     return start;
 }
