@@ -13,7 +13,7 @@ int main () {
 
 	printf("=============================================================Test the music player=============================================================");
 
-	printf("================================Test add song================================\n");
+	printf("================================Test add song================================\n\n");
 
 	addSong("song1", "am3");
 	//printLibrary();
@@ -31,23 +31,25 @@ int main () {
 	addSong("song5", "wo2017");
 	printLibrary();
 
-	printf("================================Test searchSong================================\n");
+	printf("\n================================Test searchSong================================\n\n");
 
 	printNode(searchSong("jAm", "am2030"));
 	printNode(searchSong("jSong1", "am2030"));
 	printNode(searchSong("jSong2", "am2030"));
 	printNode(searchSong("tSong", "am2030"));
-	printNode(searchSong("song1", "am2030"));
+	printNode(searchSong("song1", "am2030"));	
+	printNode(searchSong("fasjkd", "am2030"));
+	printNode(searchSong("song1", "am203"));
 	printNode(searchSong("rijirjg", "fijifj"));
 
 
-	printf("================================Test searchArtist================================\n");
+	printf("\n================================Test searchArtist================================\n\n");
 	printNode(searchArtist("am2030"));
 	printNode(searchArtist("am3"));
 	printNode(searchArtist("fijifj"));
 	printNode(searchArtist("wo2017"));
 
-	printf("================================Test printLetter================================\n");
+	printf("\n================================Test printLetter================================\n\n");
 	int i = 0;
 	for(; i < 26; i++) 
 	{
@@ -55,15 +57,15 @@ int main () {
 		printLetter(i + 97);
 	}
 
-	printf("================================Test printAllSongs================================\n");
+	printf("\n================================Test printAllSongs================================\n\n");
 	printAllSongs("am3");
 	printAllSongs("am2030");
+	printAllSongs("wo2017");
 
-
-	printf("================================Test shuffle================================\n");
+	printf("\n================================Test shuffle================================\n\n");
 	shuffle(15);
 
-	printf("================================Test deleteSong================================\n");
+	printf("\n================================Test deleteSong================================\n\n");
 
 	deleteSong("jAm", "am2030");
 	deleteSong("jSong1", "am2030");
@@ -73,7 +75,7 @@ int main () {
 	deleteSong("rijirjg", "fijifj");
 
 
-	printf("================================Test clearLibrary================================\n");
+	printf("\n================================Test clearLibrary================================\n\n");
 	clearLibrary();
 
 	printLibrary();
