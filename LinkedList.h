@@ -1,10 +1,12 @@
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
 struct node {
-
   char name[256];
   char artist[256];
   struct node* next;
   
 };
+#endif
 
 void printlistH(struct node* start);
 void printlist(struct node* start);

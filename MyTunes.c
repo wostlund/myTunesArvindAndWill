@@ -8,7 +8,8 @@ struct node* songs[26];
 
 void initSongs()
 {
-	for(int i = 0; i < 26; i++) songs[i] = NULL;
+  int i;
+  for(i = 0; i < 26; i++) songs[i] = NULL;
 }
 
 struct node* addSong(char* n, char* a)
