@@ -246,15 +246,19 @@ int testLinkedList () {
     printf("list: ");
     printlist(start);
 
-    c = 0;
-    for(; c < 10; c++)
-    {
-      printf("random song: ");
-      printNode(findRandom(start, 10));
-      printf("state of list: ");
-      printlist(start);
-      printf("\n");
-    }
+    printf("random song: ");
+    printNode(findRandom(start, 10));
+    printf("state of list: ");
+    printlist(start);
+    printf("\n");
+
+    printf("============================Find Node Test============================\n");
+    //finds node which contains the song
+    printNode(findNode("ff", start));
+    printNode(findNode("absentSong", start));
+    printNode(findNode("song3", start));
+    printNode(findNode("cc", start));
+
 
     printf("============================Remove Node Test============================\n");
     struct node* removing = start->next->next->next;
