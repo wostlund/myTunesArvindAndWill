@@ -8,6 +8,5 @@ void printLetter(char letter);
 void printAllSongs(char* artName);
 void printLibrary();
 void shuffle(int count);
-struct node* findNode(char *n, struct node* start);
 struct node* deleteSong(char* n, char* a);
 void clearLibrary();
