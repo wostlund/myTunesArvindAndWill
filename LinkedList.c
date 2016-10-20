@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 struct node {
 
@@ -65,6 +66,7 @@ struct node* findArtistSong(char* art, struct node* now){
 }
 
 struct node* findRandom(struct node* now, int listLen){
+  //srand(time(0));
   int r = rand() % listLen;
   struct node* k = now;
   while(r){

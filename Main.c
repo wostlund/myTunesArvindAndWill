@@ -19,22 +19,28 @@ int main () {
 	addSong("jAm", "am2030");
 	addSong("jSong1", "am2030");
 	addSong("jSong2", "am2030");
+	addSong("zSong3", "wo2017");
+	addSong("zSong4", "wo2017");
+	addSong("zSong5", "wo2017");
+	addSong("song3", "wo2017");
+	addSong("song5", "wo2017");
 	printLibrary();
 
 	printf("================================Test searchSong================================\n");
 
-	printlist(searchSong("jAm", "am2030"));
-	printlist(searchSong("jSong1", "am2030"));
-	printlist(searchSong("jSong2", "am2030"));
-	printlist(searchSong("tSong", "am2030"));
-	printlist(searchSong("song1", "am2030"));
-	printlist(searchSong("rijirjg", "fijifj"));
+	printNode(searchSong("jAm", "am2030"));
+	printNode(searchSong("jSong1", "am2030"));
+	printNode(searchSong("jSong2", "am2030"));
+	printNode(searchSong("tSong", "am2030"));
+	printNode(searchSong("song1", "am2030"));
+	printNode(searchSong("rijirjg", "fijifj"));
 
 
 	printf("================================Test searchArtist================================\n");
 	printNode(searchArtist("am2030"));
 	printNode(searchArtist("am3"));
 	printNode(searchArtist("fijifj"));
+	printNode(searchArtist("wo2017"));
 
 	printf("================================Test printLetter================================\n");
 	int i = 0;
@@ -50,9 +56,7 @@ int main () {
 
 
 	printf("================================Test shuffle================================\n");
-	shuffle(5);
-	shuffle(5);
-	shuffle(8);
+	shuffle(15);
 
 	printf("================================Test deleteSong================================\n");
 
