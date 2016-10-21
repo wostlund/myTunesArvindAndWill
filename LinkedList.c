@@ -285,6 +285,10 @@ int testLinkedList () {
     start = removeNode(start, removing);
     printlist(start);
 
+    printf("Freed list\n");
+    printf("List after freeing: ");
+    start = freeList(start);
+    printlist(start);
 
     return 0;
 }
